@@ -1,0 +1,39 @@
+name: Run Selenium tests with Selenium Grid
+
+on: [push, pull_request]
+
+jobs:
+  selenium-tests:
+    runs-on: ubuntu-latest
+    services:
+      selenium-hub:
+        image: selenium/hub:4.21.0-20240507
+        ports:
+          - 4444:4444
+      chrome:
+        image: selenium/node-chrome:4.21.0-20240507
+        env:
+          SE_EVENT_BUS_HOST: selenium-hub
+          SE_EVENT_BUS_PUBLISH_PORT: 4442
+          SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+      firefox:
+        image: selenium/node-firefox:4.21.0-20240507
+        env:
+          SE_EVENT_BUS_HOST: selenium-hub
+          SE_EVENT_BUS_PUBLISH_PORT: 4442
+          SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install selenium
+      - name: Run Selenium tests
+        env:
+          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+        run: |
+          # Aquí ejecuta tus tests, por ejemplo:
+          pytest tests/
