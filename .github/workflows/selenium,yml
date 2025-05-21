@@ -25,7 +25,9 @@ jobs:
           SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
       - name: Set up Python 3.x
         uses: actions/setup-python@v5
         with:
