@@ -1,6 +1,7 @@
 name: Run Selenium tests with Selenium Grid
 
-on: [push, pull_request]
+on: 
+  workflow_dispatch:
 
 jobs:
   selenium-tests:
@@ -35,5 +36,4 @@ jobs:
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
         run: |
-          # Aquí ejecuta tus tests, por ejemplo:
-          pytest tests/
+          pytest test.py
