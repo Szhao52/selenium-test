@@ -33,7 +33,8 @@ jobs:
         with:
           python-version: '3.x'
       - name: Install dependencies
-        run: pip install selenium
+        run: pip install selenium pytest
+
       - name: Run Selenium tests
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
