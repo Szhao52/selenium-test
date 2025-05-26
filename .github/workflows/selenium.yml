@@ -2,6 +2,11 @@ name: Run Selenium tests with Selenium Grid
 
 on: 
   workflow_dispatch:
+      inputs:
+      test_name:
+        description: 'Name of the test'
+        required: true
+        default: 'test.py'
 
 jobs:
   selenium-tests:
@@ -39,4 +44,4 @@ jobs:
         env:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
         run: |
-          pytest test.py
+          pytest ${{ inputs.test_name }}

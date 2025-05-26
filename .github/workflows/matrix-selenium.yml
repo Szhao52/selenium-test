@@ -1,18 +1,22 @@
+name: Parallel Selenium Tests
 
-name: Run Selenium tests with Local Drivers
-
-on: 
+on:
   workflow_dispatch:
-    inputs:
-      test_name:
-        description: 'Name of the test'
-        required: true
-        default: 'test1'
 
 jobs:
   selenium-tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+  
+  services:
+    selenium:
+       image: selenium/standalone-${{ matrix.browser }}:latest
+       ports:
+          - 4444:4444
 
+  
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -27,5 +31,8 @@ jobs:
           pip install selenium pytest
 
       - name: Run Selenium tests
+        env:
+          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+          BROWSER: ${{ matrix.browser }}        
         run: |
-          pytest ${{ inputs.test_name }}
+          pytest tests/test_${{ matrix.browser }}.py
