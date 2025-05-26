@@ -35,4 +35,4 @@ jobs:
           SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
           BROWSER: ${{ matrix.browser }}        
         run: |
-          pytest tests/test_${{ matrix.browser }}.py
+          pytest test_${{ matrix.browser }}.py
