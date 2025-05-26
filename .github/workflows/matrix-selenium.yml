@@ -10,29 +10,29 @@ jobs:
       matrix:
         browser: [chrome, firefox]
   
-  services:
-    selenium:
-       image: selenium/standalone-${{ matrix.browser }}:latest
-       ports:
-          - 4444:4444
+    services:
+      selenium:
+        image: selenium/standalone-${{ matrix.browser }}:latest
+        ports:
+            - 4444:4444
 
   
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up Python 3.x
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
 
-    - name: Install dependencies
-      run: |
-        pip install selenium pytest
+      - name: Install dependencies
+        run: |
+          pip install selenium pytest
 
-    - name: Run Selenium tests
-      env:
-        SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
-        BROWSER: ${{ matrix.browser }}        
-      run: |
-        pytest tests/test_${{ matrix.browser }}.py
+      - name: Run Selenium tests
+        env:
+          SELENIUM_REMOTE_URL: http://localhost:4444/wd/hub
+          BROWSER: ${{ matrix.browser }}        
+        run: |
+          pytest tests/test_${{ matrix.browser }}.py
