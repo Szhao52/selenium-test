@@ -3,16 +3,10 @@ name: Run Selenium tests with Local Drivers
 
 on: 
   workflow_dispatch:
-    inputs:
-      test_name:
-        description: 'Name of the test'
-        required: true
-        default: 'test1'
 
 jobs:
   selenium-tests:
     runs-on: ubuntu-latest
-  
 
     steps:
       - name: Checkout repository
@@ -27,6 +21,18 @@ jobs:
         run: |
           pip install selenium pytest
 
+      - name: Setup Browser
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: 132
+          install-dependencies: true
+          install-chromedriver: true
+
+
+      - name: Set up Geckodriver
+        uses: browser-actions/setup-geckodriver@v1
+
+
       - name: Run Selenium tests
         run: |
-          pytest ${{ inputs.test_name }}
+          pytest test1.py
