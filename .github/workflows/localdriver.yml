@@ -31,9 +31,6 @@ jobs:
 
       - name: Setup firefox
         uses: browser-actions/setup-firefox@v1
-        with:
-          firefox-version: 96.0
-
 
       - name: Run Selenium tests
         run: |
